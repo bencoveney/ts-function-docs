@@ -1,1 +1,1 @@
-# -ts-function-docs
+# ts-function-docs

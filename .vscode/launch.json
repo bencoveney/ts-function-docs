@@ -5,14 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Run",
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
-            "args": ["src\\index.ts"],
-            "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
+            "program": "${workspaceRoot}/node_modules/ts-node/dist/_bin.js",
+            "args": ["src/index.ts"],
             "sourceMaps": true,
-            "cwd": "${workspaceRoot}",
-            "protocol": "inspector",
+            "cwd": "${workspaceRoot}"
         }
     ]
 }

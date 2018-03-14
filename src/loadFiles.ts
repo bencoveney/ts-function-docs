@@ -164,10 +164,10 @@ function getParameter(
 ): Model.Parameter {
     const name = node.name.getText();
     const documentation = compileJSDocs(TypeScript.getJSDocParameterTags(node));
-    const hasDecorators = !!node.decorators;
+    const isIgnored = node.decorators && !!node.decorators.find((decorator: TypeScript.Decorator) => decorator.expression.getText() === "ignore");
     const type = node.type.getText();
     const isOptional = !!node.questionToken;
     const isRest = !!node.dotDotDotToken;
 
-    return { name, documentation, type, isOptional, hasDecorators, isRest };
+    return { name, documentation, type, isOptional, isIgnored, isRest };
 }

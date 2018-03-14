@@ -40,16 +40,16 @@ ${"-".repeat(callSignature.length)}
 
 ${method.documentation}
 
-${documentParameters(removeDecoratedParameters(method.parameters))}
+${documentParameters(removeIgnoredParameters(method.parameters))}
 `;
 }
 
-function removeDecoratedParameters(parameters: Parameter[]): Parameter[] {
-    return parameters.filter(parameter => !parameter.hasDecorators);
+function removeIgnoredParameters(parameters: Parameter[]): Parameter[] {
+    return parameters.filter(parameter => !parameter.isIgnored);
 }
 
 function documentSignature(method: Model.Method): string {
-    const parameters = removeDecoratedParameters(method.parameters)
+    const parameters = removeIgnoredParameters(method.parameters)
         .map(parameter => `${parameter.isRest ? "..." : ""}${parameter.name}${parameter.isOptional ? "?" : ""}: ${parameter.type}`)
         .join(", ");
 

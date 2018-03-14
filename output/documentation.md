@@ -46,6 +46,24 @@ This one has documentation.
 |---------|------|---------|--------------------------------|
 |sample   |string|No       |The parameter is documented too.|
 
+`noDocsWithParamsIgnored(other: number)`
+----------------------------------------
+
+No documentation
+
+|Parameter|Type  |Optional?|Description     |
+|---------|------|---------|----------------|
+|other    |number|No       |No documentation|
+
+`withDocsWithParamsIgnored(other: number)`
+------------------------------------------
+
+This one has documentation.
+
+|Parameter|Type  |Optional?|Description                     |
+|---------|------|---------|--------------------------------|
+|other    |number|No       |The parameter is documented too.|
+
 `noDocsWithParamsDecorated(other: number)`
 ------------------------------------------
 
@@ -60,9 +78,9 @@ No documentation
 
 This one has documentation.
 
-|Parameter|Type  |Optional?|Description                     |
-|---------|------|---------|--------------------------------|
-|other    |number|No       |The parameter is documented too.|
+|Parameter|Type  |Optional?|Description                            |
+|---------|------|---------|---------------------------------------|
+|other    |number|No       |A parameter with a different decorator.|
 
 `withDocsWithOptionalParams(other: number, optional?: string)`
 --------------------------------------------------------------

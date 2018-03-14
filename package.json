@@ -4,7 +4,7 @@
   "description": "Generate documentation about TypeScript functions",
   "main": "index.js",
   "scripts": {
-    "test": "tsc"
+    "test": "ts-node src/index.ts"
   },
   "repository": {
     "type": "git",

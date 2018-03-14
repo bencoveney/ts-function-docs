@@ -30,4 +30,6 @@ export interface Parameter {
     isOptional: boolean;
     /** Whether the parameter has decorators. */
     hasDecorators: boolean;
+    /** Whether the parameter is a rest parameter. */
+    isRest: boolean;
 };

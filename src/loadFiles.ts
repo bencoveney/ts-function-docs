@@ -167,6 +167,7 @@ function getParameter(
     const hasDecorators = !!node.decorators;
     const type = node.type.getText();
     const isOptional = !!node.questionToken;
+    const isRest = !!node.dotDotDotToken;
 
-    return { name, documentation, type, isOptional, hasDecorators };
+    return { name, documentation, type, isOptional, hasDecorators, isRest };
 }

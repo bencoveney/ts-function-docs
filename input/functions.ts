@@ -58,4 +58,13 @@ export class myClass {
     public static withDocsWithOptionalParams(other: number, optional?: string) {
         console.log("Hello World");
     }
+
+    /**
+     * This one has documentation.
+     * @param other The parameter is documented too.
+     * @param rest A rest parameter.
+     */
+    public static withDocsWithRestParams(other: number, ...rest: string[]) {
+        console.log("Hello World");
+    }
 }

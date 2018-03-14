@@ -4,4 +4,4 @@ Experimenting with generating documentation using the TypeScript compiler.
 
 Look at `/input` and `/output` for examples.
 
-Currently documents classes, their methods and parameters. Parameters with decorators are excluded.
+Currently documents classes, their methods and parameters. Parameters with the @ignored decorator are excluded.

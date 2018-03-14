@@ -3,6 +3,10 @@ function ignore (target: Object, propertyKey: string | symbol, parameterIndex: n
     console.log("f(): called");
 }
 
+function other (target: Object, propertyKey: string | symbol, parameterIndex: number) {
+    console.log("f(): called");
+}
+
 /**
  * Class documentation
  */
@@ -37,7 +41,7 @@ export class myClass {
         console.log("Hello World");
     }
 
-    public static noDocsWithParamsDecorated(@ignore sample: string, other: number) {
+    public static noDocsWithParamsIgnored(@ignore sample: string, other: number) {
         console.log("Hello World");
     }
 
@@ -46,7 +50,20 @@ export class myClass {
      * @param sample A parameter with a decorator.
      * @param other The parameter is documented too.
      */
-    public static withDocsWithParamsDecorated(@ignore sample: string, other: number) {
+    public static withDocsWithParamsIgnored(@ignore sample: string, other: number) {
+        console.log("Hello World");
+    }
+
+    public static noDocsWithParamsDecorated(@ignore sample: string, @other other: number) {
+        console.log("Hello World");
+    }
+
+    /**
+     * This one has documentation.
+     * @param sample A parameter with the ignore decorator.
+     * @param other A parameter with a different decorator.
+     */
+    public static withDocsWithParamsDecorated(@ignore sample: string, @other other: number) {
         console.log("Hello World");
     }
 

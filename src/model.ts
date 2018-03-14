@@ -28,6 +28,6 @@ export interface Parameter {
     documentation: string;
     /** Whether the parameter is optional. */
     isOptional: boolean;
-    /** Whether the parameter has decorators. */
-    hasDecorators: boolean;
+    /** Whether the parameter is ignored. */
+    isIgnored: boolean;
 };

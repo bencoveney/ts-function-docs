@@ -28,6 +28,8 @@ export interface Parameter {
     documentation: string;
     /** Whether the parameter is optional. */
     isOptional: boolean;
+    /** Whether the parameter is a rest parameter. */
+    isRest: boolean;
     /** Whether the parameter is ignored. */
     isIgnored: boolean;
 };

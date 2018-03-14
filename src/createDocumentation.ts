@@ -50,7 +50,7 @@ function removeIgnoredParameters(parameters: Parameter[]): Parameter[] {
 
 function documentSignature(method: Model.Method): string {
     const parameters = removeIgnoredParameters(method.parameters)
-        .map(parameter => `${parameter.name}${parameter.isOptional ? "?" : ""}: ${parameter.type}`)
+        .map(parameter => `${parameter.isRest ? "..." : ""}${parameter.name}${parameter.isOptional ? "?" : ""}: ${parameter.type}`)
         .join(", ");
 
     return `\`${method.name}(${parameters})\``;
@@ -90,6 +90,11 @@ function documentParameters(parameters: Model.Parameter[]): string {
         parameters.map(parameter => toYesNo(parameter.isOptional)).concat(optionalHeader)
     );
 
+    const restHeader = "Multiple?";
+    const longestRest = getMaxLength(
+        parameters.map(parameter => toYesNo(parameter.isRest)).concat(restHeader)
+    );
+
     const descriptionHeader = "Description";
     const longestDescription = getMaxLength(
         parameters.map(parameter => parameter.documentation).concat(descriptionHeader)
@@ -100,12 +105,14 @@ function documentParameters(parameters: Model.Parameter[]): string {
             name: nameHeader,
             type: typeHeader,
             isOptional: optionalHeader,
+            isRest: restHeader,
             documentation: descriptionHeader
         },
         {
             name:"-".repeat(longestName),
             type: "-".repeat(longestType),
             isOptional: "-".repeat(longestOptional),
+            isRest: "-".repeat(longestRest),
             documentation: "-".repeat(longestDescription)
         }
     ];
@@ -117,6 +124,7 @@ function documentParameters(parameters: Model.Parameter[]): string {
                     name: parameter.name,
                     type: parameter.type,
                     isOptional: toYesNo(parameter.isOptional),
+                    isRest: toYesNo(parameter.isRest),
                     documentation: parameter.documentation,
                 })
             )
@@ -127,6 +135,7 @@ function documentParameters(parameters: Model.Parameter[]): string {
                 padRightSpaces(parameter.name, longestName),
                 padRightSpaces(parameter.type, longestType),
                 padRightSpaces(parameter.isOptional, longestOptional),
+                padRightSpaces(parameter.isRest, longestRest),
                 padRightSpaces(parameter.documentation, longestDescription),
                 ""
             ]

@@ -1,33 +1,41 @@
 // Wraps the text with the specified character.
-function wrap(term: string, wrapper: string) {
-    return `${wrapper}${term}${wrapper}`;
+function wrap(text: string, wrapper: string) {
+    return `${wrapper}${text}${wrapper}`;
 }
 
 // Makes the specified text italic.
-export function makeItalic(term: string) {
-    return wrap(term, "*");
+export function makeItalic(text: string) {
+    return wrap(text, "*");
 }
 
 // Makes the specified text bold.
-export function makeBold(term: string) {
-    return wrap(term, "**");
+export function makeBold(text: string) {
+    return wrap(text, "**");
 }
 
 // Converts the specified text to code.
-export function makeCode(term: string) {
-    return wrap(term, "`");
+export function makeCode(text: string) {
+    return wrap(text, "`");
+}
+
+// Converts the specified text to code.
+export function makeMultiLineCode(text: string, language: string) {
+    const content = `${language}
+${text}
+`;
+    return wrap(content, "```");
 }
 
 // Converts the specified text to a top-level heading.
-export function makeHeading(term: string) {
-    return `${term}
-${"=".repeat(term.length)}`
+export function makeHeading(text: string) {
+    return `${text}
+${"=".repeat(text.length)}`
 }
 
 // Converts the specified text to a sub-heading.
-export function makeSubheading(term: string) {
-    return `${term}
-${"-".repeat(term.length)}`
+export function makeSubheading(text: string) {
+    return `${text}
+${"-".repeat(text.length)}`
 }
 
 // Pads the string to the specified length with spaces.

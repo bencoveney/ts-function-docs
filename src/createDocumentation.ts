@@ -44,6 +44,8 @@ ${Markdown.makeSubheading(callSignature)}
 ${method.documentation}
 
 ${documentParameters(removeIgnoredParameters(method.parameters))}
+
+${createSample(method)}
 `;
 }
 
@@ -90,4 +92,27 @@ function documentParameters(parameters: Model.Parameter[]): string {
             ]
         )
     );
+}
+
+// Guesses a simple sample value for each parameter value.
+function getSampleValue(parameter: Model.Parameter) {
+    switch (parameter.type) {
+        case "number":
+            return "0";
+        case "string":
+            return `"my ${parameter.name}"`;
+        case "string[]":
+            return [1,2,3].map(index => `"${parameter.name} ${index}"`).join(", ");
+        default:
+            return "X";
+    }
+}
+
+// Creates a code sample showing how a method could be called.
+function createSample(method: Model.Method) {
+    const parameterValues = removeIgnoredParameters(method.parameters).map(getSampleValue);
+    const content = `// Sample
+${method.name}(${parameterValues.join(", ")});`
+
+    return Markdown.makeMultiLineCode(content, "JavaScript");
 }

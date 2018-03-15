@@ -1,7 +1,9 @@
 import * as Model from "./model";
 import * as FileSystem from "fs";
+import * as Markdown from "./markdown";
 import { Parameter } from "./model";
 
+// Builds the documentation and writes it to the specified location on disk.
 export function createDocumentation(location: string, classes: Model.Class[]) {
     const output = buildString(classes, documentClass)
     FileSystem.writeFileSync(
@@ -11,6 +13,7 @@ export function createDocumentation(location: string, classes: Model.Class[]) {
     );
 }
 
+// Compiles a string by mapping each item through the specified builder and concatenating the result.
 function buildString<Type>(
     items: Type[],
     builder: (item: Type) => string
@@ -21,10 +24,10 @@ function buildString<Type>(
     );
 }
 
+// Creates class documentation.
 function documentClass(_class: Model.Class): string {
     return `
-${_class.name}
-${"=".repeat(_class.name.length)}
+${Markdown.makeHeading(_class.name)}
 
 ${_class.documentation}
 
@@ -32,114 +35,84 @@ ${buildString(_class.methods, documentMethod)}
 `;
 }
 
+// Creates method documentation.
 function documentMethod(method: Model.Method): string {
     const callSignature = documentSignature(method);
     return `
-${callSignature}
-${"-".repeat(callSignature.length)}
+${Markdown.makeSubheading(callSignature)}
 
 ${method.documentation}
 
 ${documentParameters(removeIgnoredParameters(method.parameters))}
+
+${createSample(method)}
 `;
 }
 
+// Filters out ignored parameters.
 function removeIgnoredParameters(parameters: Parameter[]): Parameter[] {
     return parameters.filter(parameter => !parameter.isIgnored);
 }
 
+// Creates method signature documentation.
 function documentSignature(method: Model.Method): string {
     const parameters = removeIgnoredParameters(method.parameters)
         .map(parameter => `${parameter.isRest ? "..." : ""}${parameter.name}${parameter.isOptional ? "?" : ""}: ${parameter.type}`)
         .join(", ");
 
-    return `\`${method.name}(${parameters})\``;
+    return Markdown.makeCode(`${method.name}(${parameters})`);
 }
 
-function getMaxLength(words: string[]): number {
-    return words
-        .map(word => word.length)
-        .reduce((biggest, next) => Math.max(biggest, next), 0);
-}
-
-function padRightSpaces(text: string, length: number): string {
-    return text + " ".repeat(length - text.length);
-}
-
+// Converts booleans to a more readable format.
 function toYesNo(condition: boolean): string {
-    return condition ? "Yes" : "No";
+    return condition ? Markdown.makeItalic("Yes") : "No";
 }
 
+//  Creates documentation for parameters.
 function documentParameters(parameters: Model.Parameter[]): string {
     if (parameters.length == 0) {
         return "";
     }
 
-    const nameHeader = "Parameter";
-    const longestName = getMaxLength(
-        parameters.map(parameter => parameter.name).concat(nameHeader)
-    );
-
-    const typeHeader = "Type";
-    const longestType = getMaxLength(
-        parameters.map(parameter => parameter.type).concat(typeHeader)
-    );
-
-    const optionalHeader = "Optional?";
-    const longestOptional = getMaxLength(
-        parameters.map(parameter => toYesNo(parameter.isOptional)).concat(optionalHeader)
-    );
-
-    const restHeader = "Multiple?";
-    const longestRest = getMaxLength(
-        parameters.map(parameter => toYesNo(parameter.isRest)).concat(restHeader)
-    );
-
-    const descriptionHeader = "Description";
-    const longestDescription = getMaxLength(
-        parameters.map(parameter => parameter.documentation).concat(descriptionHeader)
-    );
-
-    const headers = [
-        {
-            name: nameHeader,
-            type: typeHeader,
-            isOptional: optionalHeader,
-            isRest: restHeader,
-            documentation: descriptionHeader
-        },
-        {
-            name:"-".repeat(longestName),
-            type: "-".repeat(longestType),
-            isOptional: "-".repeat(longestOptional),
-            isRest: "-".repeat(longestRest),
-            documentation: "-".repeat(longestDescription)
-        }
-    ];
-
-    return headers
-        .concat(
-            parameters.map(
-                parameter => ({
-                    name: parameter.name,
-                    type: parameter.type,
-                    isOptional: toYesNo(parameter.isOptional),
-                    isRest: toYesNo(parameter.isRest),
-                    documentation: parameter.documentation,
-                })
-            )
-        )
-        .map(
+    return Markdown.makeTable(
+        [
+            "Parameter",
+            "Type",
+            "Optional?",
+            "Multiple?",
+            "Description"
+        ],
+        parameters.map(
             parameter => [
-                "",
-                padRightSpaces(parameter.name, longestName),
-                padRightSpaces(parameter.type, longestType),
-                padRightSpaces(parameter.isOptional, longestOptional),
-                padRightSpaces(parameter.isRest, longestRest),
-                padRightSpaces(parameter.documentation, longestDescription),
-                ""
+                Markdown.makeBold(parameter.name),
+                Markdown.makeCode(parameter.type),
+                toYesNo(parameter.isOptional),
+                toYesNo(parameter.isRest),
+                parameter.documentation,
             ]
-            .join("|")
         )
-        .join("\n");
+    );
+}
+
+// Guesses a simple sample value for each parameter value.
+function getSampleValue(parameter: Model.Parameter) {
+    switch (parameter.type) {
+        case "number":
+            return "0";
+        case "string":
+            return `"my ${parameter.name}"`;
+        case "string[]":
+            return [1,2,3].map(index => `"${parameter.name} ${index}"`).join(", ");
+        default:
+            return "X";
+    }
+}
+
+// Creates a code sample showing how a method could be called.
+function createSample(method: Model.Method) {
+    const parameterValues = removeIgnoredParameters(method.parameters).map(getSampleValue);
+    const content = `// Sample
+${method.name}(${parameterValues.join(", ")});`
+
+    return Markdown.makeMultiLineCode(content, "JavaScript");
 }

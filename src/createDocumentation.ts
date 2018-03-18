@@ -103,6 +103,8 @@ function getSampleValue(parameter: Model.Parameter) {
             return `"my ${parameter.name}"`;
         case "string[]":
             return [1,2,3].map(index => `"${parameter.name} ${index}"`).join(", ");
+        case "number[]":
+            return [1,2,3].map(index => `${index}`).join(", ");
         default:
             return "X";
     }

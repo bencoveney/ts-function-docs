@@ -1,87 +1,239 @@
 
-function ignore (target: Object, propertyKey: string | symbol, parameterIndex: number) {
-    console.log("f(): called");
+function docIgnore (target: Object, propertyKey: string | symbol, parameterIndex: number) {
 }
 
-function other (target: Object, propertyKey: string | symbol, parameterIndex: number) {
-    console.log("f(): called");
+function otherParamDecorator (target: Object, propertyKey: string | symbol, parameterIndex: number) {
+}
+
+function docGenerate (target: Object, key: string | symbol, descriptor: Object) {
+}
+
+function otherMethodDecorator (target: Object, key: string | symbol, descriptor: Object) {
 }
 
 /**
- * Class documentation
+ * This class has documented methods.
  */
-export class myClass {
-    public static noDocsNoParams() {
-        console.log("Hello World");
+export class documentedClass {
+    // Static methods:
+
+    @docGenerate
+    public static publicStaticNoDocsNoParams(): void
+    {
     }
 
     /**
-     * This one has documentation
+     * Fully documented static method.
      */
-    public static withDocsNoParams() {
-        console.log("Hello World");
+    @docGenerate
+    public static publicStaticWithDocsNoParams(): void
+    {
     }
 
-    public static noDocsWithParams(sample: string) {
-        console.log("Hello World");
+    @docGenerate
+    public static publicStaticNoDocsWithParams(name: string, age: number): void
+    {
     }
 
     /**
-     * This one has documentation but not for the parameter.
+     * Fully documented static method with parameters.
+     * @param name A string parameter.
+     * @param age A number parameter.
      */
-    public static someDocsWithParams(sample: string) {
-        console.log("Hello World");
+    @docGenerate
+    public static publicStaticWithDocsWithParams(name: string, age: number): void
+    {
     }
 
     /**
-     * This one has documentation.
-     * @param sample The parameter is documented too.
+     * Ignored static method with parameters.
+     * @param name A string parameter.
+     * @param age A number parameter.
      */
-    public static withDocsWithParams(sample: string) {
-        console.log("Hello World");
-    }
-
-    public static noDocsWithParamsIgnored(@ignore sample: string, other: number) {
-        console.log("Hello World");
+    public static publicStaticNotGeneratedWithDocsWithParams(name: string, age: number): void
+    {
     }
 
     /**
-     * This one has documentation.
-     * @param sample A parameter with a decorator.
-     * @param other The parameter is documented too.
+     * Fully documented static method with multiple method decorators and parameters.
+     * @param name A string parameter.
+     * @param age A number parameter.
      */
-    public static withDocsWithParamsIgnored(@ignore sample: string, other: number) {
-        console.log("Hello World");
-    }
-
-    public static noDocsWithParamsDecorated(@ignore sample: string, @other other: number) {
-        console.log("Hello World");
-    }
-
-    /**
-     * This one has documentation.
-     * @param sample A parameter with the ignore decorator.
-     * @param other A parameter with a different decorator.
-     */
-    public static withDocsWithParamsDecorated(@ignore sample: string, @other other: number) {
-        console.log("Hello World");
+    @otherMethodDecorator
+    @docGenerate
+    public static publicStaticWithDocsWithParamsMultipleDecorators(name: string, age: number): void
+    {
     }
 
     /**
-     * This one has documentation.
-     * @param other The parameter is documented too.
-     * @param optional An optional parameter.
+     * Fully documented static method with parameters and a return type.
+     * @param name A string parameter.
+     * @param age A number parameter.
+     * @returns A number return value.
      */
-    public static withDocsWithOptionalParams(other: number, optional?: string) {
-        console.log("Hello World");
+    @docGenerate
+    public static publicStaticWithDocsWithParamsWithReturn(name: string, age: number): number
+    {
+        return 1;
     }
 
     /**
-     * This one has documentation.
-     * @param other The parameter is documented too.
-     * @param rest A rest parameter.
+     * Fully documented static method with ignored parameters.
+     * @param name A string parameter.
+     * @param age A number parameter.
      */
-    public static withDocsWithRestParams(other: number, ...rest: string[]) {
-        console.log("Hello World");
+    @docGenerate
+    public static publicStaticWithDocsWithIgnoredParams(@docIgnore name: string, @otherParamDecorator age: number): void
+    {
+    }
+
+    /**
+     * Fully documented static method with optional parameters.
+     * @param name A string parameter.
+     * @param age An optional number parameter.
+     */
+    @docGenerate
+    public static publicStaticWithDocsWithOptionalParams(name: string, age?: number): void
+    {
+    }
+
+    /**
+     * Fully documented static method with rest parameters.
+     * @param name A string parameter.
+     * @param ages A rest parameter.
+     */
+    @docGenerate
+    public static publicStaticWithDocsWithRestParams(name: string, ...ages: number[]): void
+    {
+    }
+
+    /**
+     * Fully documented private static method.
+     * @param name A string parameter.
+     * @param age A number parameter.
+     */
+    @docGenerate
+    private static privateStaticWithDocsWithParams(name: string, age: number): void
+    {
+    }
+
+    /**
+     * Ignored private static method.
+     * @param name A string parameter.
+     * @param age A number parameter.
+     */
+    private static privateStaticNotGeneratedWithDocsWithParams(name: string, age: number): void
+    {
+    }
+
+    // Non-static methods:
+
+    @docGenerate
+    public publicNoDocsNoParams(): void
+    {
+    }
+
+    /**
+     * Fully documented method.
+     */
+    @docGenerate
+    public publicWithDocsNoParams(): void
+    {
+    }
+
+    @docGenerate
+    public publicNoDocsWithParams(name: string, age: number): void
+    {
+    }
+
+    /**
+     * Fully documented method with parameters.
+     * @param name A string parameter.
+     * @param age A number parameter.
+     */
+    @docGenerate
+    public publicWithDocsWithParams(name: string, age: number): void
+    {
+    }
+
+    /**
+     * Ignored method with parameters.
+     * @param name A string parameter.
+     * @param age A number parameter.
+     */
+    public publicNotGeneratedWithDocsWithParams(name: string, age: number): void
+    {
+    }
+
+    /**
+     * Fully documented method with multiple method decorators and parameters.
+     * @param name A string parameter.
+     * @param age A number parameter.
+     */
+    @otherMethodDecorator
+    @docGenerate
+    public publicWithDocsWithParamsMultipleDecorators(name: string, age: number): void
+    {
+    }
+
+    /**
+     * Fully documented method with parameters and a return type.
+     * @param name A string parameter.
+     * @param age A number parameter.
+     * @returns A number return value.
+     */
+    @docGenerate
+    public publicWithDocsWithParamsWithReturn(name: string, age: number): number
+    {
+        return 1;
+    }
+
+    /**
+     * Fully documented method with ignored parameters.
+     * @param name A string parameter.
+     * @param age A number parameter.
+     */
+    @docGenerate
+    public publicWithDocsWithIgnoredParams(@docIgnore name: string, @otherParamDecorator age: number): void
+    {
+    }
+
+    /**
+     * Fully documented method with optional parameters.
+     * @param name A string parameter.
+     * @param age An optional number parameter.
+     */
+    @docGenerate
+    public publicWithDocsWithOptionalParams(name: string, age?: number): void
+    {
+    }
+
+    /**
+     * Fully documented method with rest parameters.
+     * @param name A string parameter.
+     * @param ages A rest parameter.
+     */
+    @docGenerate
+    public publicWithDocsWithRestParams(name: string, ...ages: number[]): void
+    {
+    }
+
+    /**
+     * Fully documented private method.
+     * @param name A string parameter.
+     * @param age A number parameter.
+     */
+    @docGenerate
+    private privateWithDocsWithParams(name: string, age: number): void
+    {
+    }
+
+    /**
+     * Ignored private method.
+     * @param name A string parameter.
+     * @param age A number parameter.
+     */
+    private privateNotGeneratedWithDocsWithParams(name: string, age: number): void
+    {
     }
 }

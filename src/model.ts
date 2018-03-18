@@ -1,5 +1,10 @@
+export interface Ignorable {
+    /** Whether this documented object is ignored. */
+    isIgnored: boolean;
+}
+
 /** A documented class. */
-export interface Class {
+export interface Class extends Ignorable {
     /** The classes name. */
     name: string;
     /** The compiled class documentation. */
@@ -9,7 +14,7 @@ export interface Class {
 };
 
 /** A documented methods. */
-export interface Method {
+export interface Method extends Ignorable {
     /** The name of the method. */
     name: string;
     /** The compiled method documentation. */
@@ -19,7 +24,7 @@ export interface Method {
 };
 
 /** A documented function parameter. */
-export interface Parameter {
+export interface Parameter extends Ignorable {
     /** The name of the parameter. */
     name: string;
     /** The type of the parameter. */
@@ -30,6 +35,4 @@ export interface Parameter {
     isOptional: boolean;
     /** Whether the parameter is a rest parameter. */
     isRest: boolean;
-    /** Whether the parameter is ignored. */
-    isIgnored: boolean;
 };

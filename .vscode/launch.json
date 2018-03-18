@@ -9,7 +9,7 @@
             "type": "node",
             "request": "launch",
             "program": "${workspaceRoot}/node_modules/ts-node/dist/_bin.js",
-            "args": ["src/index.ts"],
+            "args": ["${workspaceRoot}/src/index.ts"],
             "sourceMaps": true,
             "cwd": "${workspaceRoot}"
         }

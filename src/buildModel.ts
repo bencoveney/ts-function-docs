@@ -2,57 +2,31 @@ import * as TypeScript from "typescript";
 import * as Glob from "glob";
 import * as Model from "./model";
 import * as FileSystem from "fs";
+import { File } from "./getFiles";
 
 const generateMethodDocumentationDecorator = "docGenerate";
 const ignoreParameterDecorator = "docIgnore";
 
-/**
- * Gets documentation for any matching files.
- * @param glob The test for files to process.
- * @returns The documented classes.
- */
-export function loadFiles(
-    glob: string,
-    complete: (documentation: Model.Class[]) => void
-): void {
-    // Find related files.
-    Glob(
-        glob,
-        {},
-        (error: Error, fileNames: string[]) => {
-            // Did anything go wrong?
-            if (error) {
-                console.error(error);
-            }
-            // Process each found file
-            complete(
-                fileNames.reduce(
-                    (classes: Model.Class[], fileName) => classes.concat(
-                        getFileDocumentation(fileName)
-                    ),
-                    []
-                )
-            );
-        }
-    );
-};
+export function buildModel(
+    files: File[]
+): Model.Class[] {
+    return files
+        .map(processFile)
+        .reduce((previous, next) => previous.concat(next), [])
+}
 
-/**
- * Gets the documentation for the specified file
- * @param fileName
- */
-function getFileDocumentation(
-    fileName: string
+function processFile(
+    file: File
 ): Model.Class[] {
     // Load the file
-    const file = TypeScript.createSourceFile(
-        fileName,
-        FileSystem.readFileSync(fileName).toString(),
+    const sourceFile = TypeScript.createSourceFile(
+        file.name,
+        file.content,
         TypeScript.ScriptTarget.ES2015,
         true
     );
     return getDescendantOfKind(
-        file,
+        sourceFile,
         TypeScript.SyntaxKind.ClassDeclaration
     ).map(getClass);
 }

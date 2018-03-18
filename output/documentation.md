@@ -126,7 +126,7 @@ Fully documented static method with rest parameters.
 |Parameter|Type      |Optional?|Multiple?|Description        |
 |---------|----------|---------|---------|-------------------|
 |**name** |`string`  |No       |No       |A string parameter.|
-|**ages** |`number[]`|No       |*Yes*    |An rest parameter. |
+|**ages** |`number[]`|No       |*Yes*    |A rest parameter.  |
 
 ```JavaScript
 // Sample
@@ -269,7 +269,7 @@ Fully documented method with rest parameters.
 |Parameter|Type      |Optional?|Multiple?|Description        |
 |---------|----------|---------|---------|-------------------|
 |**name** |`string`  |No       |No       |A string parameter.|
-|**ages** |`number[]`|No       |*Yes*    |An rest parameter. |
+|**ages** |`number[]`|No       |*Yes*    |A rest parameter.  |
 
 ```JavaScript
 // Sample

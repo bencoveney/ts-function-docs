@@ -1,11 +1,10 @@
 import * as Model from "./model";
 import * as FileSystem from "fs";
 import * as Markdown from "./markdown";
-import { Parameter } from "./model";
 
 // Builds the documentation and writes it to the specified location on disk.
 export function createDocumentation(location: string, classes: Model.Class[]) {
-    const output = buildString(classes, documentClass)
+    const output = buildString(classes.filter(isIgnored), documentClass)
     FileSystem.writeFileSync(
         location,
         output,
@@ -31,7 +30,7 @@ ${Markdown.makeHeading(_class.name)}
 
 ${_class.documentation}
 
-${buildString(_class.methods, documentMethod)}
+${buildString(_class.methods.filter(isIgnored), documentMethod)}
 `;
 }
 
@@ -43,20 +42,21 @@ ${Markdown.makeSubheading(callSignature)}
 
 ${method.documentation}
 
-${documentParameters(removeIgnoredParameters(method.parameters))}
+${documentParameters(method.parameters.filter(isIgnored))}
 
 ${createSample(method)}
 `;
 }
 
-// Filters out ignored parameters.
-function removeIgnoredParameters(parameters: Parameter[]): Parameter[] {
-    return parameters.filter(parameter => !parameter.isIgnored);
+// Filters out ignored objects.
+function isIgnored(documentedObject: Model.Ignorable): boolean {
+    return !documentedObject.isIgnored;
 }
 
 // Creates method signature documentation.
 function documentSignature(method: Model.Method): string {
-    const parameters = removeIgnoredParameters(method.parameters)
+    const parameters = method.parameters
+        .filter(isIgnored)
         .map(parameter => `${parameter.isRest ? "..." : ""}${parameter.name}${parameter.isOptional ? "?" : ""}: ${parameter.type}`)
         .join(", ");
 
@@ -110,7 +110,7 @@ function getSampleValue(parameter: Model.Parameter) {
 
 // Creates a code sample showing how a method could be called.
 function createSample(method: Model.Method) {
-    const parameterValues = removeIgnoredParameters(method.parameters).map(getSampleValue);
+    const parameterValues = method.parameters.filter(isIgnored).map(getSampleValue);
     const content = `// Sample
 ${method.name}(${parameterValues.join(", ")});`
 

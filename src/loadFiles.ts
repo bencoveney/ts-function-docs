@@ -3,6 +3,9 @@ import * as Glob from "glob";
 import * as Model from "./model";
 import * as FileSystem from "fs";
 
+const generateMethodDocumentationDecorator = "docGenerate";
+const ignoreParameterDecorator = "docIgnore";
+
 /**
  * Gets documentation for any matching files.
  * @param glob The test for files to process.
@@ -129,10 +132,12 @@ function getClass(
         TypeScript.SyntaxKind.MethodDeclaration
     ).map(getMethod);
 
-    const documentation = getJSDocComment(node);
-    const name = node.name.getText();
+    const isIgnored = methods.every((method: Model.Method) => method.isIgnored);
 
-    return { name, documentation, methods };
+    const documentation = isIgnored ? "" : getJSDocComment(node);
+    const name = isIgnored ? "" : node.name.getText();
+
+    return { name, documentation, methods, isIgnored };
 }
 
 /**
@@ -143,15 +148,19 @@ function getClass(
 function getMethod(
     node: TypeScript.MethodDeclaration
 ): Model.Method {
-    const parameters = getDescendantOfKind(
+    const isIgnored = !node.decorators ? true : !!!node.decorators.find((decorator: TypeScript.Decorator) => {
+        return decorator.expression.getText() === generateMethodDocumentationDecorator;
+    });
+
+    const parameters = isIgnored ? null : getDescendantOfKind(
         node,
         TypeScript.SyntaxKind.Parameter
     ).map(getParameter);
 
-    const documentation = getJSDocComment(node);
-    const name = node.name.getText();
+    const documentation = isIgnored ? "" : getJSDocComment(node);
+    const name = isIgnored ? "" : node.name.getText();
 
-    return { name, documentation, parameters };
+    return { name, documentation, parameters, isIgnored };
 }
 
 /**
@@ -164,7 +173,7 @@ function getParameter(
 ): Model.Parameter {
     const name = node.name.getText();
     const documentation = compileJSDocs(TypeScript.getJSDocParameterTags(node));
-    const isIgnored = node.decorators && !!node.decorators.find((decorator: TypeScript.Decorator) => decorator.expression.getText() === "ignore");
+    const isIgnored = node.decorators && !!node.decorators.find((decorator: TypeScript.Decorator) => decorator.expression.getText() === ignoreParameterDecorator);
     const type = node.type.getText();
     const isOptional = !!node.questionToken;
     const isRest = !!node.dotDotDotToken;

@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/bencoveney/ts-function-docs#readme",
   "dependencies": {
-    "typescript": "^2.6.2"
+    "@types/yargs": "^11.0.0",
+    "typescript": "^2.6.2",
+    "yargs": "^11.0.0"
   },
   "devDependencies": {
     "@types/glob": "^5.0.35",

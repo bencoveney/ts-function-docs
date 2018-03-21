@@ -50,4 +50,4 @@ workflows:
             branches:
               only: master
             tags:
-	            only: /^v.*/
+              only: /^v.*/

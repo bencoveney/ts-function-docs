@@ -40,12 +40,12 @@ jobs:
           command: npm publish
 workflows:
   version: 2
-  build-deploy:
+  build-and-deploy:
     jobs:
-      - build-job
-      - deploy-job:
+      - build
+      - deploy:
           requires:
-            - build-job
+            - build
           filters:
             branches:
               only: master

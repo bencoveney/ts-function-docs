@@ -1,6 +1,6 @@
 {
   "name": "ts-function-docs",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Generate documentation about TypeScript functions",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,11 @@
     "type": "git",
     "url": "git+https://github.com/bencoveney/ts-function-docs.git"
   },
-  "author": "Ben Coveney",
+  "author": {
+    "name": "Ben Coveney",
+    "email": "bencoveney@gmail.com",
+    "url": "https://github.com/bencoveney"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/bencoveney/ts-function-docs/issues"
@@ -26,5 +30,8 @@
     "@types/yargs": "^11.0.0",
     "glob": "^7.1.2",
     "ts-node": "^4.1.0"
+  },
+  "engines": {
+    "node": ">=6.0.0"
   }
 }

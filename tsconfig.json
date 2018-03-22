@@ -6,7 +6,9 @@
         "preserveConstEnums": true,
         "sourceMap": true,
         "target": "es2016",
-        "experimentalDecorators": true
+        "experimentalDecorators": true,
+        "declaration": true,
+        "outDir": "./dist",
     },
     "include": [
         "src/**/*.ts"

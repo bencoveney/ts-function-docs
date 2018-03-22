@@ -4,6 +4,7 @@
   "description": "Generate documentation about TypeScript functions",
   "main": "index.js",
   "scripts": {
+    "prepublishOnly": "tsc",
     "test": "ts-node src/index.ts"
   },
   "repository": {

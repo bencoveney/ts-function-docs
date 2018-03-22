@@ -81,11 +81,11 @@ function getDescendantOfKind<
                 result = result.concat(child as NodeType);
             } else {
                 // Search deeper if not a match.
-                result.concat(
+                result = result.concat(
                     getDescendantOfKind(
                         child,
                         kind
-                    )
+                    ) as NodeType[]
                 );
             }
         }

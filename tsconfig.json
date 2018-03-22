@@ -8,7 +8,7 @@
         "target": "es2016",
         "experimentalDecorators": true,
         "declaration": true,
-        "outDir": "./dist",
+        "outDir": "./dist"
     },
     "include": [
         "src/**/*.ts"

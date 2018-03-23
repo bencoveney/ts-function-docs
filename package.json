@@ -1,9 +1,10 @@
 {
   "name": "ts-function-docs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Generate documentation about TypeScript functions",
   "main": "index.js",
   "scripts": {
+    "prepublishOnly": "tsc",
     "test": "ts-node src/index.ts"
   },
   "repository": {

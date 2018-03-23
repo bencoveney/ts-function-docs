@@ -35,6 +35,8 @@ jobs:
           name: Set up NPM auth
           command: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
 
+      - run: npm install
+
       - run:
           name: Publish to NPM
           command: npm publish

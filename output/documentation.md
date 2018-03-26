@@ -291,3 +291,17 @@ Fully documented private method.
 privateWithDocsWithParams("my name", 0);
 ```
 
+`publicWithDocsWithInnerParams(sentence: string)`
+-------------------------------------------------
+
+Documented method with inner parameters.
+
+|Parameter   |Type    |Optional?|Multiple?|Description        |
+|------------|--------|---------|---------|-------------------|
+|**sentence**|`string`|No       |No       |A string parameter.|
+
+```JavaScript
+// Sample
+publicWithDocsWithInnerParams("my sentence");
+```
+

@@ -236,4 +236,14 @@ export class documentedClass {
     private privateNotGeneratedWithDocsWithParams(name: string, age: number): void
     {
     }
+
+    /**
+     * Documented method with inner parameters.
+     * @param sentence A string parameter.
+     */
+    @docGenerate
+    public publicWithDocsWithInnerParams(sentence: string): void
+    {
+        sentence.split(" ").map((word) => console.log(word));
+    }
 }

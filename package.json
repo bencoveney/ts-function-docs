@@ -1,6 +1,6 @@
 {
   "name": "ts-function-docs",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Generate documentation about TypeScript functions",
   "main": "dist/index.js",
   "scripts": {

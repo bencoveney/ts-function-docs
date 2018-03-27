@@ -41,12 +41,17 @@ function getClass(node) {
     return { name, documentation, methods, isIgnored };
 }
 function getMethod(node) {
-    const isIgnored = !node.decorators ? true : !!!node.decorators.find((decorator) => {
+    const isIgnored = !node.decorators ? true : !node.decorators.find((decorator) => {
         return decorator.expression.getText() === generateMethodDocumentationDecorator;
     });
-    const parameters = isIgnored ? null : getDescendantOfKind(node, TypeScript.SyntaxKind.Parameter).map(getParameter);
-    const documentation = isIgnored ? "" : getJSDocComment(node);
-    const name = isIgnored ? "" : node.name.getText();
+    if (isIgnored) {
+        return { isIgnored, name: "", documentation: "", parameters: [] };
+    }
+    const parameters = Array
+        .from(node.parameters)
+        .map(getParameter);
+    const documentation = getJSDocComment(node);
+    const name = node.name.getText();
     return { name, documentation, parameters, isIgnored };
 }
 function getParameter(node) {

@@ -2,7 +2,7 @@
   "name": "ts-function-docs",
   "version": "0.0.6",
   "description": "Generate documentation about TypeScript functions",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "prepublishOnly": "tsc",
     "test": "ts-node src/index.ts"

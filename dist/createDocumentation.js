@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const FileSystem = require("fs");
 const Markdown = require("./markdown");
+const Case = require("case");
 function createDocumentation(location, classes) {
     const output = buildString(classes.filter(isIgnored), documentClass);
     FileSystem.writeFileSync(location, output, { encoding: "UTF8" });
@@ -67,7 +68,7 @@ function getSampleValue(parameter) {
         case "number":
             return "0";
         case "string":
-            return `"my ${parameter.name}"`;
+            return `"My ${Case.lower(parameter.name)}"`;
         case "string[]":
             return [1, 2, 3].map(index => `"${parameter.name} ${index}"`).join(", ");
         case "number[]":

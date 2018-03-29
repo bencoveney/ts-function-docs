@@ -236,4 +236,13 @@ export class documentedClass {
     private privateNotGeneratedWithDocsWithParams(name: string, age: number): void
     {
     }
+
+    /**
+     * Method with a camel case string parameter
+     * @param nameOrPerson A string parameter.
+     */
+    @docGenerate
+    public publicWithCamelCaseParameter(nameOfPerson: string): void
+    {
+    }
 }

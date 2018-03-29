@@ -28,7 +28,7 @@ export interface Parameter extends Ignorable {
     /** The name of the parameter. */
     name: string;
     /** The type of the parameter. */
-    type: string;
+    types: string[];
     /** The compiled parameter documentation. */
     documentation: string;
     /** Whether the parameter is optional. */

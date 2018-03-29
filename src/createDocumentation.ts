@@ -57,7 +57,14 @@ function isIgnored(documentedObject: Model.Ignorable): boolean {
 function documentSignature(method: Model.Method): string {
     const parameters = method.parameters
         .filter(isIgnored)
-        .map(parameter => `${parameter.isRest ? "..." : ""}${parameter.name}${parameter.isOptional ? "?" : ""}: ${parameter.type}`)
+        .map(
+            parameter => {
+                const restMark = parameter.isRest ? "..." : "";
+                const optionalMark = parameter.isOptional ? "?" : "";
+                const types = parameter.types.join(" | ");
+                return `${restMark}${parameter.name}${optionalMark}: ${types}`;
+            }
+        )
         .join(", ");
 
     return Markdown.makeCode(`${method.name}(${parameters})`);
@@ -85,7 +92,7 @@ function documentParameters(parameters: Model.Parameter[]): string {
         parameters.map(
             parameter => [
                 Markdown.makeBold(parameter.name),
-                Markdown.makeCode(parameter.type),
+                parameter.types.map(Markdown.makeCode).join(" or "),
                 toYesNo(parameter.isOptional),
                 toYesNo(parameter.isRest),
                 parameter.documentation,
@@ -95,14 +102,21 @@ function documentParameters(parameters: Model.Parameter[]): string {
 }
 
 // Guesses a simple sample value for each parameter value.
-function getSampleValue(parameter: Model.Parameter) {
-    switch (parameter.type) {
+function getSampleValues(parameter: Model.Parameter): string {
+    return parameter.types
+        .map(type => getSampleValue(parameter.name, type))
+        .join(" or ");
+}
+
+// Guesses a simple sample value for each parameter value.
+function getSampleValue(name: string, type: string): string {
+    switch (type) {
         case "number":
             return "0";
         case "string":
-            return `"my ${parameter.name}"`;
+            return `"my ${name}"`;
         case "string[]":
-            return [1,2,3].map(index => `"${parameter.name} ${index}"`).join(", ");
+            return [1,2,3].map(index => `"${name} ${index}"`).join(", ");
         case "number[]":
             return [1,2,3].map(index => `${index}`).join(", ");
         default:
@@ -112,7 +126,7 @@ function getSampleValue(parameter: Model.Parameter) {
 
 // Creates a code sample showing how a method could be called.
 function createSample(method: Model.Method) {
-    const parameterValues = method.parameters.filter(isIgnored).map(getSampleValue);
+    const parameterValues = method.parameters.filter(isIgnored).map(getSampleValues);
     const content = `// Sample
 ${method.name}(${parameterValues.join(", ")});`
 

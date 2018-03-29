@@ -37,7 +37,12 @@ function isIgnored(documentedObject) {
 function documentSignature(method) {
     const parameters = method.parameters
         .filter(isIgnored)
-        .map(parameter => `${parameter.isRest ? "..." : ""}${parameter.name}${parameter.isOptional ? "?" : ""}: ${parameter.type}`)
+        .map(parameter => {
+        const restMark = parameter.isRest ? "..." : "";
+        const optionalMark = parameter.isOptional ? "?" : "";
+        const types = parameter.types.join(" | ");
+        return `${restMark}${parameter.name}${optionalMark}: ${types}`;
+    })
         .join(", ");
     return Markdown.makeCode(`${method.name}(${parameters})`);
 }
@@ -56,20 +61,25 @@ function documentParameters(parameters) {
         "Description"
     ], parameters.map(parameter => [
         Markdown.makeBold(parameter.name),
-        Markdown.makeCode(parameter.type),
+        parameter.types.map(Markdown.makeCode).join(" or "),
         toYesNo(parameter.isOptional),
         toYesNo(parameter.isRest),
         parameter.documentation,
     ]));
 }
-function getSampleValue(parameter) {
-    switch (parameter.type) {
+function getSampleValues(parameter) {
+    return parameter.types
+        .map(type => getSampleValue(parameter.name, type))
+        .join(" or ");
+}
+function getSampleValue(name, type) {
+    switch (type) {
         case "number":
             return "0";
         case "string":
-            return `"my ${parameter.name}"`;
+            return `"my ${name}"`;
         case "string[]":
-            return [1, 2, 3].map(index => `"${parameter.name} ${index}"`).join(", ");
+            return [1, 2, 3].map(index => `"${name} ${index}"`).join(", ");
         case "number[]":
             return [1, 2, 3].map(index => `${index}`).join(", ");
         default:
@@ -77,7 +87,7 @@ function getSampleValue(parameter) {
     }
 }
 function createSample(method) {
-    const parameterValues = method.parameters.filter(isIgnored).map(getSampleValue);
+    const parameterValues = method.parameters.filter(isIgnored).map(getSampleValues);
     const content = `// Sample
 ${method.name}(${parameterValues.join(", ")});`;
     return Markdown.makeMultiLineCode(content, "JavaScript");

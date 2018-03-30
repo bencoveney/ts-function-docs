@@ -305,3 +305,17 @@ Documented method with inner parameters.
 publicWithDocsWithInnerParams("my sentence");
 ```
 
+`publicWithMultipleParamTypes(ambiguous: string | number)`
+----------------------------------------------------------
+
+Documented method with multiple parameter types.
+
+|Parameter    |Type                |Optional?|Multiple?|Description                 |
+|-------------|--------------------|---------|---------|----------------------------|
+|**ambiguous**|`string` or `number`|No       |No       |It could be almost ANYTHING!|
+
+```JavaScript
+// Sample
+publicWithMultipleParamTypes("my ambiguous" or 0);
+```
+

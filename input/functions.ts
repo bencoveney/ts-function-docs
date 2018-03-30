@@ -246,4 +246,13 @@ export class documentedClass {
     {
         sentence.split(" ").map((word) => console.log(word));
     }
+
+    /**
+     * Documented method with multiple parameter types.
+     * @param ambiguous It could be almost ANYTHING!
+     */
+    @docGenerate
+    public publicWithMultipleParamTypes(ambiguous: string | number): void
+    {
+    }
 }

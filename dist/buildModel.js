@@ -58,9 +58,10 @@ function getParameter(node) {
     const name = node.name.getText();
     const documentation = compileJSDocs(TypeScript.getJSDocParameterTags(node));
     const isIgnored = node.decorators && !!node.decorators.find((decorator) => decorator.expression.getText() === ignoreParameterDecorator);
-    const type = node.type.getText();
+    const typeNodes = TypeScript.isUnionTypeNode(node.type) ? Array.from(node.type.types) : [node.type];
+    const types = typeNodes.map(type => type.getText());
     const isOptional = !!node.questionToken;
     const isRest = !!node.dotDotDotToken;
-    return { name, documentation, type, isOptional, isIgnored, isRest };
+    return { name, documentation, types, isOptional, isIgnored, isRest };
 }
 //# sourceMappingURL=buildModel.js.map

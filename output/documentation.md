@@ -324,9 +324,9 @@ publicWithMultipleParamTypes("My ambiguous" or 0);
 
 Method with a camel case string parameter
 
-|Parameter       |Type    |Optional?|Multiple?|Description     |
-|----------------|--------|---------|---------|----------------|
-|**nameOfPerson**|`string`|No       |No       |No documentation|
+|Parameter       |Type    |Optional?|Multiple?|Description        |
+|----------------|--------|---------|---------|-------------------|
+|**nameOfPerson**|`string`|No       |No       |A string parameter.|
 
 ```JavaScript
 // Sample

@@ -258,7 +258,7 @@ export class documentedClass {
 
     /**
      * Method with a camel case string parameter
-     * @param nameOrPerson A string parameter.
+     * @param nameOfPerson A string parameter.
      */
     @docGenerate
     public publicWithCamelCaseParameter(nameOfPerson: string): void

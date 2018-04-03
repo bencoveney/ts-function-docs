@@ -41,21 +41,27 @@ function getClass(node) {
     return { name, documentation, methods, isIgnored };
 }
 function getMethod(node) {
-    const isIgnored = !node.decorators ? true : !!!node.decorators.find((decorator) => {
+    const isIgnored = !node.decorators ? true : !node.decorators.find((decorator) => {
         return decorator.expression.getText() === generateMethodDocumentationDecorator;
     });
-    const parameters = isIgnored ? null : getDescendantOfKind(node, TypeScript.SyntaxKind.Parameter).map(getParameter);
-    const documentation = isIgnored ? "" : getJSDocComment(node);
-    const name = isIgnored ? "" : node.name.getText();
+    if (isIgnored) {
+        return { isIgnored, name: "", documentation: "", parameters: [] };
+    }
+    const parameters = Array
+        .from(node.parameters)
+        .map(getParameter);
+    const documentation = getJSDocComment(node);
+    const name = node.name.getText();
     return { name, documentation, parameters, isIgnored };
 }
 function getParameter(node) {
     const name = node.name.getText();
     const documentation = compileJSDocs(TypeScript.getJSDocParameterTags(node));
     const isIgnored = node.decorators && !!node.decorators.find((decorator) => decorator.expression.getText() === ignoreParameterDecorator);
-    const type = node.type.getText();
+    const typeNodes = TypeScript.isUnionTypeNode(node.type) ? Array.from(node.type.types) : [node.type];
+    const types = typeNodes.map(type => type.getText());
     const isOptional = !!node.questionToken;
     const isRest = !!node.dotDotDotToken;
-    return { name, documentation, type, isOptional, isIgnored, isRest };
+    return { name, documentation, types, isOptional, isIgnored, isRest };
 }
 //# sourceMappingURL=buildModel.js.map

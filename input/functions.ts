@@ -238,6 +238,25 @@ export class documentedClass {
     }
 
     /**
+     * Documented method with inner parameters.
+     * @param sentence A string parameter.
+     */
+    @docGenerate
+    public publicWithDocsWithInnerParams(sentence: string): void
+    {
+        sentence.split(" ").map((word) => console.log(word));
+    }
+
+    /**
+     * Documented method with multiple parameter types.
+     * @param ambiguous It could be almost ANYTHING!
+     */
+    @docGenerate
+    public publicWithMultipleParamTypes(ambiguous: string | number): void
+    {
+    }
+
+    /**
      * Method with a camel case string parameter
      * @param nameOrPerson A string parameter.
      */

@@ -13,7 +13,7 @@ export interface Method extends Ignorable {
 }
 export interface Parameter extends Ignorable {
     name: string;
-    type: string;
+    types: string[];
     documentation: string;
     isOptional: boolean;
     isRest: boolean;

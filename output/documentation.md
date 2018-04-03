@@ -291,6 +291,34 @@ Fully documented private method.
 privateWithDocsWithParams("My name", 0);
 ```
 
+`publicWithDocsWithInnerParams(sentence: string)`
+-------------------------------------------------
+
+Documented method with inner parameters.
+
+|Parameter   |Type    |Optional?|Multiple?|Description        |
+|------------|--------|---------|---------|-------------------|
+|**sentence**|`string`|No       |No       |A string parameter.|
+
+```JavaScript
+// Sample
+publicWithDocsWithInnerParams("My sentence");
+```
+
+`publicWithMultipleParamTypes(ambiguous: string | number)`
+----------------------------------------------------------
+
+Documented method with multiple parameter types.
+
+|Parameter    |Type                |Optional?|Multiple?|Description                 |
+|-------------|--------------------|---------|---------|----------------------------|
+|**ambiguous**|`string` or `number`|No       |No       |It could be almost ANYTHING!|
+
+```JavaScript
+// Sample
+publicWithMultipleParamTypes("My ambiguous" or 0);
+```
+
 `publicWithCamelCaseParameter(nameOfPerson: string)`
 ----------------------------------------------------
 

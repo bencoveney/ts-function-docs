@@ -1,6 +1,7 @@
 import * as Model from "./model";
 import * as FileSystem from "fs";
 import * as Markdown from "./markdown";
+import * as Case from "case";
 
 // Builds the documentation and writes it to the specified location on disk.
 export function createDocumentation(location: string, classes: Model.Class[]) {
@@ -114,7 +115,7 @@ function getSampleValue(name: string, type: string): string {
         case "number":
             return "0";
         case "string":
-            return `"my ${name}"`;
+            return `"My ${Case.lower(name)}"`;
         case "string[]":
             return [1,2,3].map(index => `"${name} ${index}"`).join(", ");
         case "number[]":

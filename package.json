@@ -1,6 +1,6 @@
 {
   "name": "ts-function-docs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Generate documentation about TypeScript functions",
   "main": "dist/index.js",
   "scripts": {
@@ -22,14 +22,15 @@
   },
   "homepage": "https://github.com/bencoveney/ts-function-docs#readme",
   "dependencies": {
-    "typescript": "^2.6.2",
-    "yargs": "^11.0.0"
+    "case": "^1.5.4",
+    "yargs": "^11.0.0",
+    "glob": "^7.1.2"
   },
   "devDependencies": {
     "@types/glob": "^5.0.35",
     "@types/node": "^9.3.0",
     "@types/yargs": "^11.0.0",
-    "glob": "^7.1.2",
+    "typescript": "^2.6.2",
     "ts-node": "^4.1.0"
   },
   "engines": {

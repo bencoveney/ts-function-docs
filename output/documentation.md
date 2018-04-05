@@ -41,7 +41,7 @@ No documentation
 
 ```JavaScript
 // Sample
-publicStaticNoDocsWithParams("my name", 0);
+publicStaticNoDocsWithParams("My name", 0);
 ```
 
 `publicStaticWithDocsWithParams(name: string, age: number)`
@@ -56,7 +56,7 @@ Fully documented static method with parameters.
 
 ```JavaScript
 // Sample
-publicStaticWithDocsWithParams("my name", 0);
+publicStaticWithDocsWithParams("My name", 0);
 ```
 
 `publicStaticWithDocsWithParamsMultipleDecorators(name: string, age: number)`
@@ -71,7 +71,7 @@ Fully documented static method with multiple method decorators and parameters.
 
 ```JavaScript
 // Sample
-publicStaticWithDocsWithParamsMultipleDecorators("my name", 0);
+publicStaticWithDocsWithParamsMultipleDecorators("My name", 0);
 ```
 
 `publicStaticWithDocsWithParamsWithReturn(name: string, age: number)`
@@ -86,7 +86,7 @@ Fully documented static method with parameters and a return type.
 
 ```JavaScript
 // Sample
-publicStaticWithDocsWithParamsWithReturn("my name", 0);
+publicStaticWithDocsWithParamsWithReturn("My name", 0);
 ```
 
 `publicStaticWithDocsWithIgnoredParams(age: number)`
@@ -115,7 +115,7 @@ Fully documented static method with optional parameters.
 
 ```JavaScript
 // Sample
-publicStaticWithDocsWithOptionalParams("my name", 0);
+publicStaticWithDocsWithOptionalParams("My name", 0);
 ```
 
 `publicStaticWithDocsWithRestParams(name: string, ...ages: number[])`
@@ -130,7 +130,7 @@ Fully documented static method with rest parameters.
 
 ```JavaScript
 // Sample
-publicStaticWithDocsWithRestParams("my name", 1, 2, 3);
+publicStaticWithDocsWithRestParams("My name", 1, 2, 3);
 ```
 
 `privateStaticWithDocsWithParams(name: string, age: number)`
@@ -145,7 +145,7 @@ Fully documented private static method.
 
 ```JavaScript
 // Sample
-privateStaticWithDocsWithParams("my name", 0);
+privateStaticWithDocsWithParams("My name", 0);
 ```
 
 `publicNoDocsNoParams()`
@@ -184,7 +184,7 @@ No documentation
 
 ```JavaScript
 // Sample
-publicNoDocsWithParams("my name", 0);
+publicNoDocsWithParams("My name", 0);
 ```
 
 `publicWithDocsWithParams(name: string, age: number)`
@@ -199,7 +199,7 @@ Fully documented method with parameters.
 
 ```JavaScript
 // Sample
-publicWithDocsWithParams("my name", 0);
+publicWithDocsWithParams("My name", 0);
 ```
 
 `publicWithDocsWithParamsMultipleDecorators(name: string, age: number)`
@@ -214,7 +214,7 @@ Fully documented method with multiple method decorators and parameters.
 
 ```JavaScript
 // Sample
-publicWithDocsWithParamsMultipleDecorators("my name", 0);
+publicWithDocsWithParamsMultipleDecorators("My name", 0);
 ```
 
 `publicWithDocsWithParamsWithReturn(name: string, age: number)`
@@ -229,7 +229,7 @@ Fully documented method with parameters and a return type.
 
 ```JavaScript
 // Sample
-publicWithDocsWithParamsWithReturn("my name", 0);
+publicWithDocsWithParamsWithReturn("My name", 0);
 ```
 
 `publicWithDocsWithIgnoredParams(age: number)`
@@ -258,7 +258,7 @@ Fully documented method with optional parameters.
 
 ```JavaScript
 // Sample
-publicWithDocsWithOptionalParams("my name", 0);
+publicWithDocsWithOptionalParams("My name", 0);
 ```
 
 `publicWithDocsWithRestParams(name: string, ...ages: number[])`
@@ -273,7 +273,7 @@ Fully documented method with rest parameters.
 
 ```JavaScript
 // Sample
-publicWithDocsWithRestParams("my name", 1, 2, 3);
+publicWithDocsWithRestParams("My name", 1, 2, 3);
 ```
 
 `privateWithDocsWithParams(name: string, age: number)`
@@ -288,7 +288,7 @@ Fully documented private method.
 
 ```JavaScript
 // Sample
-privateWithDocsWithParams("my name", 0);
+privateWithDocsWithParams("My name", 0);
 ```
 
 `publicWithDocsWithInnerParams(sentence: string)`
@@ -302,7 +302,7 @@ Documented method with inner parameters.
 
 ```JavaScript
 // Sample
-publicWithDocsWithInnerParams("my sentence");
+publicWithDocsWithInnerParams("My sentence");
 ```
 
 `publicWithMultipleParamTypes(ambiguous: string | number)`
@@ -316,6 +316,20 @@ Documented method with multiple parameter types.
 
 ```JavaScript
 // Sample
-publicWithMultipleParamTypes("my ambiguous" or 0);
+publicWithMultipleParamTypes("My ambiguous" or 0);
+```
+
+`publicWithCamelCaseParameter(nameOfPerson: string)`
+----------------------------------------------------
+
+Method with a camel case string parameter
+
+|Parameter       |Type    |Optional?|Multiple?|Description        |
+|----------------|--------|---------|---------|-------------------|
+|**nameOfPerson**|`string`|No       |No       |A string parameter.|
+
+```JavaScript
+// Sample
+publicWithCamelCaseParameter("My name of person");
 ```
 

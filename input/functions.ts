@@ -255,4 +255,13 @@ export class documentedClass {
     public publicWithMultipleParamTypes(ambiguous: string | number): void
     {
     }
+
+    /**
+     * Method with a camel case string parameter
+     * @param nameOfPerson A string parameter.
+     */
+    @docGenerate
+    public publicWithCamelCaseParameter(nameOfPerson: string): void
+    {
+    }
 }
